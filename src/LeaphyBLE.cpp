@@ -15,14 +15,31 @@ bool LeaphyBLE::initialize(const char *deviceName)
   BLE.setLocalName(deviceName);
   BLE.addService(leaphyService);
   BLE.setAdvertisedService(leaphyService);
+  BLE.advertise();
   return true;
 }
 
 BLEBoolCharacteristic LeaphyBLE::addBinaryCharacteristic(const char *name, bool initialValue)
 {
     BLEUuid uuid(name); // Turn name into UUID
-    BLEBoolCharacteristic characteristic(uuid.str(), BLERead | BLEWrite);
-    characteristic.writeValue(initialValue);
-    leaphyService.addCharacteristic(characteristic); // Hook into service
-    return characteristic;
+    BLEBoolCharacteristic* characteristic = new BLEBoolCharacteristic(uuid.str(), BLERead | BLEWrite);
+    characteristic->writeValue(initialValue);
+    leaphyService.addCharacteristic(*characteristic); // Hook into service
+
+    characteristicNames[characteristicCount] = name;
+    characteristics[characteristicCount] = characteristic;
+    characteristicCount++;
+
+    return *characteristic;
+}
+
+BLEBoolCharacteristic* LeaphyBLE::getCharacteristicByName(const char *name)
+{
+    for (int i = 0; i < characteristicCount; i++) {
+        if (characteristicNames[i] == name) {
+            return characteristics[i];
+        }
+    }
+
+    return nullptr; // characteristic not found
 }
