@@ -33,6 +33,20 @@ BLEBoolCharacteristic LeaphyBLE::addBinaryCharacteristic(const char *name, bool 
     return *characteristic;
 }
 
+BLEStringCharacteristic LeaphyBLE::addStringCharacteristic(const char *name, const char *initialValue)
+{
+    BLEUuid uuid(name); // Turn name into UUID
+    BLEStringCharacteristic* characteristic = new BLEStringCharacteristic(uuid.str(), BLERead | BLEWrite, 20);
+    characteristic->writeValue(initialValue);
+    leaphyService.addCharacteristic(*characteristic); // Hook into service
+
+    characteristicNames[characteristicCount] = name;
+    characteristics[characteristicCount] = characteristic;
+    characteristicCount++;
+
+    return *characteristic;
+}
+
 BLEBoolCharacteristic* LeaphyBLE::getCharacteristicByName(const char *name)
 {
     for (int i = 0; i < characteristicCount; i++) {

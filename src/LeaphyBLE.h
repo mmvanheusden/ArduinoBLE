@@ -8,6 +8,7 @@ class LeaphyBLE
 public:
   bool initialize(const char *deviceName);
   BLEBoolCharacteristic addBinaryCharacteristic(const char *name, bool initialValue);
+  BLEStringCharacteristic addStringCharacteristic(const char *name, const char *initialValue);
   BLEBoolCharacteristic* getCharacteristicByName(const char *name);
 
 private:
