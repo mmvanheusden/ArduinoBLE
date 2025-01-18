@@ -9,11 +9,11 @@ public:
   bool initialize(const char *deviceName);
   BLEBoolCharacteristic addBinaryCharacteristic(const char *name, bool initialValue);
   BLEStringCharacteristic addStringCharacteristic(const char *name, const char *initialValue);
-  BLEBoolCharacteristic* getCharacteristicByName(const char *name);
+  BLECharacteristic* getCharacteristicByName(const char *name);
 
 private:
   String characteristicNames[10];
-  BLEBoolCharacteristic* characteristics[10];
+  BLECharacteristic* characteristics[10];
   int characteristicCount = 0;
 };
 
