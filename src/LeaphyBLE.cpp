@@ -47,7 +47,7 @@ BLEStringCharacteristic LeaphyBLE::addStringCharacteristic(const char *name, con
     return *characteristic;
 }
 
-BLEBoolCharacteristic* LeaphyBLE::getCharacteristicByName(const char *name)
+BLECharacteristic* LeaphyBLE::getCharacteristicByName(const char *name)
 {
     for (int i = 0; i < characteristicCount; i++) {
         if (characteristicNames[i] == name) {
